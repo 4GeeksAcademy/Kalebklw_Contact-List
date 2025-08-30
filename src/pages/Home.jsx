@@ -5,7 +5,8 @@ import {Link} from "react-router-dom";
 
 export const Home = () => {
 
-const [user, setUser] = useState("Kaleb") 
+const [user, setUser] = useState("Kaleb"); 
+const [contacts, setContacts] = useState([]);
 
   const {store, dispatch} =useGlobalReducer()
   const createAgenda = () =>{
@@ -22,44 +23,70 @@ const [user, setUser] = useState("Kaleb")
 	.then((data) =>{ 
 		setUser(data.detail)
 		console.log("Tag For Agenda's Data: ", data)})
-  }
+  };
   
-const createContacts = () =>{
-	const options = {
-		method: "POST",
-		headers: {"content-type":"application/json"},
-		body: JSON.stringify({
-			"name": "user3",
-            "phone": "phone3",
-            "email": "email3",
-            "address": "address3"
-		})
+
+
+	
+
+	const deleteContact = () => {
+		const options = {
+			method: "DELETE",
+			headers: {"content-type":"application/json"},
+		}
+		fetch(store.baseUrl + "agendas/Kalebklw/contacts/", options)
+		.then((resp) => resp.json())
+		.then((data) => console.log("Deleted Contacts Data Tag: ", data))
+	};
+
+	const receiveContacts = () => {
+		fetch(store.baseUrl + "agendas/Kalebklw/contacts")
+		.then((resp) => resp.json())
+		.then((data) => setContacts(data.contacts))
 	}
-	fetch(store.baseUrl +"agendas/Kalebklw/contacts", options)
-	.then((resp) => resp.json())
-	.then((data) => console.log("Data of Contacts: ", data))
-}
 
 	useEffect(
 		() =>{
 			createAgenda()
+			receiveContacts()
 		}, []
-	)
+	);
 
 	return (
 
 		<div className="text-center mt-5">
-			<h1>Hello!!</h1>
-			{user}
+			{contacts.map(
+				(contactData) =>{
+					return(
+						<div>
+							<Link to= "/updatecontacts">
+								<button onClick={()=>{
+									dispatch({
+										type: "set-contactInfo",
+										payload: contactData
+									})
+								}}> Edit This Contact</button>
+							</Link>
+							{contactData.name}
+						</div>
+					)
+				}
+			)}
 			<Link to = "/test">
 			Go To Test Page
 			</Link>
+			<Link to = "/contacts">
+			Click Here To Add Contacts
+			</Link>
+
+			
 
 			<button onClick={()=> {
-				createContacts()
+				updateContact()
 			}}>
-				Click to Add Contact
+				Update Contact
 			</button>
+			
 
 			<div className="m-3">
 				<button onClick={() => {

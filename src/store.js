@@ -2,7 +2,12 @@ export const initialStore=()=>{
   return{
     fName: "Kaleb",
     lName: "Williams",
-    baseUrl: "https://playground.4geeks.com/contact/"
+    baseUrl: "https://playground.4geeks.com/contact/",
+    contactInfo: {"name": "",
+            "phone": "",
+            "email": "",
+            "address": ""
+          }
   }
 }
 
@@ -20,6 +25,12 @@ export default function storeReducer(store, action = {}){
     }
   }
 
+  if(action.type == "set-contactInfo"){
+    return {
+      ...store, contactInfo: action.payload
+    }
+  }
+  
 }
   // switch(action.type){
   //   case 'add_task':
