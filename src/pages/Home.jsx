@@ -24,10 +24,6 @@ const [contacts, setContacts] = useState([]);
 		setUser(data.detail)
 		console.log("Tag For Agenda's Data: ", data)})
   };
-  
-
-
-	
 
 	const deleteContact = () => {
 		const options = {
@@ -72,9 +68,9 @@ const [contacts, setContacts] = useState([]);
 					)
 				}
 			)}
-			<Link to = "/test">
+			{/* <Link to = "/test">
 			Go To Test Page
-			</Link>
+			</Link> */}
 			<Link to = "/contacts">
 			Click Here To Add Contacts
 			</Link>
@@ -88,7 +84,7 @@ const [contacts, setContacts] = useState([]);
 			</button>
 			
 
-			<div className="m-3">
+			{/* <div className="m-3">
 				<button onClick={() => {
 					dispatch({
 						type: "set-fName", 
@@ -104,7 +100,7 @@ const [contacts, setContacts] = useState([]);
 						payload: "Ayala"
 					})
 				}}> {store.lName} </button>
-			</div>
+			</div> */}
 
 		</div>
 	);

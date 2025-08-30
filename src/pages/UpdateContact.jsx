@@ -1,37 +1,25 @@
 import React, {useState} from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import { Link } from "react-router-dom";
 
 
 export const UpdateContacts = () => {
     const {store, dispatch} =useGlobalReducer()
     const [name, setName] =useState(store.contactInfo.name)
     const [phone, setPhone] =useState(store.contactInfo.phone)
+    const [email, setEmail] =useState(store.contactInfo.email)
+    const [address, setAddress] =useState(store.contactInfo.address)
     
-    const createContacts = () =>{
-	const options = {
-		method: "POST",
-		headers: {"content-type":"application/json"},
-		body: JSON.stringify({
-			"name": "user3",
-            "phone": "phone3",
-            "email": "email3",
-            "address": "address3"
-		})
-	}
-	fetch(store.baseUrl +"agendas/Kalebklw/contacts", options)
-	.then((resp) => resp.json())
-	.then((data) => console.log("Data of Contacts: ", data))
-};
 
-const updateContact =() => {
+const updateContact =(updated) => {
 		const options = {
 			method: "PUT",
 			headers: {"content-type":"application/json"},
 			body: JSON.stringify({
-				"name": "user5",
-				"phone": "phone5",
-				"email": "email5",
-				"address": "address5",
+				"name": updated,
+				"phone": updated,
+				"email": updated,
+				"address": updated,
 				id: 0
 			})
 		}
@@ -44,13 +32,34 @@ const updateContact =() => {
     return(
         <div>
             <input
-            onChange={(e)=>setName(e.target.value)} 
+            onChange={(e)=>setName(e.target.value)}
             value = {name}
             placeholder="Full Name"/>
-            <input 
+			
+			<input 
             onChange={(e)=>setPhone(e.target.value)}
             value = {phone}
             placeholder="Phone Number" />
+
+			<input 
+            onChange={(e)=>setEmail(e.target.value)}
+            value = {email}
+            placeholder="E-Mail" />
+
+			<input 
+            onChange={(e)=>setAddress(e.target.value)}
+            value = {address}
+            placeholder="Address" />
+
+			<Link to="/">Click Here To Go Home</Link>
+
+			<button
+			onClick={()=>{
+				updateContact(store.contactInfo)
+			}}
+			type="button" 
+			className="btn btn-primary">Save Test</button>
+
         </div>
     )
 };
