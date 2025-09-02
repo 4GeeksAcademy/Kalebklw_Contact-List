@@ -7,7 +7,8 @@ export const initialStore=()=>{
             "phone": "",
             "email": "",
             "address": ""
-          }
+          },
+    contacts: []      
   }
 }
 
@@ -31,6 +32,11 @@ export default function storeReducer(store, action = {}){
     }
   }
   
+  if(action.type == "set-contacts"){
+    return {
+      ...store, contacts: action.payload
+    }
+  }
 }
   // switch(action.type){
   //   case 'add_task':

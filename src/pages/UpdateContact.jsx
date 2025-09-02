@@ -1,29 +1,41 @@
 import React, {useState} from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 
 export const UpdateContacts = () => {
+	const {id} = useParams()
     const {store, dispatch} =useGlobalReducer()
-    const [name, setName] =useState(store.contactInfo.name)
-    const [phone, setPhone] =useState(store.contactInfo.phone)
-    const [email, setEmail] =useState(store.contactInfo.email)
-    const [address, setAddress] =useState(store.contactInfo.address)
+    const [name, setName] =useState('')
+    const [phone, setPhone] =useState('')
+    const [email, setEmail] =useState('')
+    const [address, setAddress] =useState('')
+	useEffect(
+		()=>{
+			const foundContact = store.contacts.find((contact) => contact.id===parseInt(id))
+			setName(foundContact.name)
+			setPhone(foundContact.phone)
+			setAddress(foundContact.address)
+			setEmail(foundContact.email)
+		},[]
+	)
     
 
-const updateContact =(updated) => {
+const updateContact =() => {
 		const options = {
 			method: "PUT",
 			headers: {"content-type":"application/json"},
 			body: JSON.stringify({
-				"name": updated,
-				"phone": updated,
-				"email": updated,
-				"address": updated,
+				"name": name,
+				"phone": phone,
+				"email": email,
+				"address": address,
 				id: 0
 			})
 		}
-		fetch(store.baseUrl + "agendas/Kalebklw/contacts/37", options)
+		fetch(store.baseUrl + `agendas/Kalebklw/contacts/${id}`, options)
 		.fetch((resp) => resp.json())
 		.fetch((data) =>console.log("Updated Contact Data Tag: ", data))
 	};
@@ -55,7 +67,7 @@ const updateContact =(updated) => {
 
 			<button
 			onClick={()=>{
-				updateContact(store.contactInfo)
+				updateContact()
 			}}
 			type="button" 
 			className="btn btn-primary">Save Test</button>

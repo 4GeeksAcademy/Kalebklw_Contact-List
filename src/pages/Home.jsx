@@ -25,20 +25,19 @@ const [contacts, setContacts] = useState([]);
 		console.log("Tag For Agenda's Data: ", data)})
   };
 
-	const deleteContact = () => {
+	const deleteContact = (id) => {
 		const options = {
 			method: "DELETE",
 			headers: {"content-type":"application/json"},
 		}
-		fetch(store.baseUrl + "agendas/Kalebklw/contacts/", options)
-		.then((resp) => resp.json())
-		.then((data) => console.log("Deleted Contacts Data Tag: ", data))
+		fetch(store.baseUrl + `agendas/Kalebklw/contacts/${id}`, options)
+		.then(receiveContacts())
 	};
 
 	const receiveContacts = () => {
 		fetch(store.baseUrl + "agendas/Kalebklw/contacts")
 		.then((resp) => resp.json())
-		.then((data) => setContacts(data.contacts))
+		.then((data) => dispatch({payload: data.contacts, type:"set-contacts"}))
 	}
 
 	useEffect(
@@ -51,19 +50,15 @@ const [contacts, setContacts] = useState([]);
 	return (
 
 		<div className="text-center mt-5">
-			{contacts.map(
+			{store.contacts.map(
 				(contactData) =>{
 					return(
-						<div>
-							<Link to= "/updatecontacts">
-								<button onClick={()=>{
-									dispatch({
-										type: "set-contactInfo",
-										payload: contactData
-									})
-								}}> Edit This Contact</button>
+						<div key={contactData.id}>
+							<Link to= {`/updatecontacts/${contactData.id}`}>
+								<button> Edit This Contact</button>
 							</Link>
 							{contactData.name}
+							<button onClick={()=> deleteContact(contactData.id)}>Delete Contact</button>
 						</div>
 					)
 				}
@@ -72,16 +67,19 @@ const [contacts, setContacts] = useState([]);
 			Go To Test Page
 			</Link> */}
 			<Link to = "/contacts">
-			Click Here To Add Contacts
+				<button
+				type="button" 
+				className="btn btn-primary"> Add Contact
+				</button>
 			</Link>
 
 			
 
-			<button onClick={()=> {
+			{/* <button onClick={()=> {
 				updateContact()
 			}}>
 				Update Contact
-			</button>
+			</button> */}
 			
 
 			{/* <div className="m-3">

@@ -13,15 +13,15 @@ export const Contacts = () => {
     const [address, setAddress] =useState(store.contactInfo.address)
 
 
-    const createContacts = (creation) =>{
+    const createContacts = () =>{
 	const options = {
 		method: "POST",
 		headers: {"content-type":"application/json"},
 		body: JSON.stringify({
-			"name": creation,
-            "phone": creation,
-            "email": "email3",
-            "address": "address3"
+			"name": name,
+            "phone": phone,
+            "email": email,
+            "address": address
 		})
 	}
 	fetch(store.baseUrl +"agendas/Kalebklw/contacts", options)
@@ -51,28 +51,32 @@ export const Contacts = () => {
                 <div className="d-flex mt-5">
                     <label className="form-label">Phone Number</label>
                 </div>
-                    <input className="form-control" placeholder="Phone Number"/>
+                    <input
+                    value={phone}
+                    className="form-control" 
+                    placeholder="Phone Number"
+                    onChange={(e)=>setPhone(e.target.value)}/>
 
 
                 <div className="d-flex mt-5">
                     <label className="form-label">Email</label>
                 </div>    
-                    <input className="form-control" placeholder="E-Mail"/>
+                    <input value = {email} className="form-control" placeholder="E-Mail" onChange={(e)=>setEmail(e.target.value)}/>
 
 
                 <div className="d-flex mt-5">
                     <label className="form-label">Address</label>
                 </div>
-                    <input className="form-control" placeholder="Address"/>
+                    <input value= {address} className="form-control" placeholder="Address" onChange={(e)=>setAddress(e.target.value)}/>
 
 
                 <div className="mt-4">
                     <button
                     onClick={()=>{
-                        createContacts(name.name)
+                        createContacts()
                     }} 
                     type = "button" 
-                    className="btn btn-primary me-3">Save Contact</button>
+                    className="btn btn-success me-3">Save Contact</button>
                     <Link to = "/">
                         <button type="button" className="btn btn-primary">Click Here To Go Home</button>
                     </Link>
