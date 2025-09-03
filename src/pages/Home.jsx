@@ -2,6 +2,7 @@ import rigoImageUrl from "../assets/img/rigo-baby.jpg";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { useState, useEffect } from "react";
 import {Link} from "react-router-dom";
+import './index.css';
 
 export const Home = () => {
 
@@ -49,56 +50,47 @@ const [contacts, setContacts] = useState([]);
 
 	return (
 
-		<div className="text-center mt-5">
+		<div className="container text-center mt-5">
 			{store.contacts.map(
 				(contactData) =>{
 					return(
-						<div key={contactData.id}>
+						<div key={contactData.id} className="contactBorder">
+
+							<div className="mainContact">
+								{contactData.name}
+							</div>
+
+							
 							<Link to= {`/updatecontacts/${contactData.id}`}>
-								<button> Edit This Contact</button>
+								<div className="d-flex justify-content-end">
+									<button 
+									type="button" 
+									className="editButton btn btn-secondary"> Edit This Contact
+									</button>
+								</div>
 							</Link>
-							{contactData.name}
-							<button onClick={()=> deleteContact(contactData.id)}>Delete Contact</button>
+
+							<div className="d-flex justify-content-end">
+								<button
+								type="button"
+								className="deleteButton btn btn-danger" 
+								onClick={()=> deleteContact(contactData.id)}>Delete Contact
+								</button>
+							</div>
+
 						</div>
 					)
 				}
 			)}
-			{/* <Link to = "/test">
-			Go To Test Page
-			</Link> */}
-			<Link to = "/contacts">
-				<button
-				type="button" 
-				className="btn btn-primary"> Add Contact
-				</button>
-			</Link>
 
-			
-
-			{/* <button onClick={()=> {
-				updateContact()
-			}}>
-				Update Contact
-			</button> */}
-			
-
-			{/* <div className="m-3">
-				<button onClick={() => {
-					dispatch({
-						type: "set-fName", 
-						payload: "Alex"
-					})
-				}}> {store.fName} </button>
+			<div className="mt-4">
+				<Link to = "/contacts">
+					<button
+					type="button" 
+					className="btn btn-primary"> Add Contact
+					</button>
+				</Link>
 			</div>
-
-			<div>
-				<button onClick={() => {
-					dispatch({
-						type: "set-lName",
-						payload: "Ayala"
-					})
-				}}> {store.lName} </button>
-			</div> */}
 
 		</div>
 	);

@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { Link } from "react-router-dom";
+import './index.css';
 
 
 export const Contacts = () => {
