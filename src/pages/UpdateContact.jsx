@@ -89,22 +89,23 @@ const updateContact =() => {
 					placeholder="Address" />
 			</div>
 
-
-			<button
-				onClick={()=>{
-					updateContact()
-				}}
-				type="button" 
-				className="btn btn-success">Save Changes
-			</button>
-
-				<Link to="/">
-					<button 
+			<div className="mt-4">
+				<button
+					onClick={()=>{
+						updateContact()
+					}}
 					type="button" 
-					className="btn btn-primary">
-						Return To Contacts
-					</button>
-				</Link>
+					className="saveButton btn btn-success">Save Changes
+				</button>
+
+					<Link to="/">
+						<button 
+						type="button" 
+						className="btn btn-primary">
+							Return To Contacts
+						</button>
+					</Link>
+			</div>
 
         </div>
     );

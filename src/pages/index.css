@@ -1,14 +1,49 @@
 .contactBorder {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+    margin-bottom: 1rem !important;
+    width: 50%;
+    height: 125px;
     border-width: 1px;
     border-style: solid;
     border-color: gray;
     border-radius: 5px;
-    margin-bottom: 1rem;
 }
 
+/* .contactInfo{
+
+} */
+
 .mainContact {
-    width: 
-    margin-top:;
+    display: flex;
+    justify-content: start;
+    margin-left: 5px;
+    margin-top: 0;
+    font-size: x-large;
+    font-weight: 600;
+}
+
+.contactPhone {
+    color: rgba(128, 128, 128, 0.563);
+    display: flex;
+    justify-content: start;
+    margin-left: 5px;
+}
+
+.contactEmail {
+    color: rgba(128, 128, 128, 0.563);
+    display: flex;
+    justify-content: start;
+    margin-left: 5px;
+}
+
+.contactAddress {
+    color: rgba(128, 128, 128, 0.563);
+    display: flex;
+    justify-content: start;
+    margin-left: 5px;
 }
 
 .editButton {
@@ -18,6 +53,13 @@
 }
 
 .deleteButton {
+    margin-top: 5px;
     margin-bottom: 20px;
     margin-right: 5px;
+}
+
+
+
+.saveButton {
+    margin-right: 10px;
 }

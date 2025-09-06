@@ -2,12 +2,11 @@ import rigoImageUrl from "../assets/img/rigo-baby.jpg";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { useState, useEffect } from "react";
 import {Link} from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPhone, faEnvelope, faMapPin } from '@fortawesome/free-solid-svg-icons'
 import './index.css';
 
 export const Home = () => {
-
-const [user, setUser] = useState("Kaleb"); 
-const [contacts, setContacts] = useState([]);
 
   const {store, dispatch} =useGlobalReducer()
   const createAgenda = () =>{
@@ -26,6 +25,12 @@ const [contacts, setContacts] = useState([]);
 		console.log("Tag For Agenda's Data: ", data)})
   };
 
+  	const receiveContacts = () => {
+		fetch(store.baseUrl + "agendas/Kalebklw/contacts")
+		.then((resp) => resp.json())
+		.then((data) => dispatch({payload: data.contacts, type:"set-contacts"}))
+	}
+
 	const deleteContact = (id) => {
 		const options = {
 			method: "DELETE",
@@ -35,11 +40,6 @@ const [contacts, setContacts] = useState([]);
 		.then(receiveContacts())
 	};
 
-	const receiveContacts = () => {
-		fetch(store.baseUrl + "agendas/Kalebklw/contacts")
-		.then((resp) => resp.json())
-		.then((data) => dispatch({payload: data.contacts, type:"set-contacts"}))
-	}
 
 	useEffect(
 		() =>{
@@ -51,31 +51,52 @@ const [contacts, setContacts] = useState([]);
 	return (
 
 		<div className="container text-center mt-5">
+			<h1 className="mb-5">Your Contacts</h1>
 			{store.contacts.map(
 				(contactData) =>{
 					return(
 						<div key={contactData.id} className="contactBorder">
 
-							<div className="mainContact">
-								{contactData.name}
+							<div className="contactInfo">
+								<div className="mainContact">
+									{contactData.name}
+								</div>
+
+								<div className="contactPhone">
+									<FontAwesomeIcon icon={faPhone} />
+									{contactData.phone}
+								</div>
+
+								<div className="contactEmail">
+									<FontAwesomeIcon icon={faEnvelope} />
+									{contactData.email}
+								</div>
+
+								<div className="contactAddress">
+									<FontAwesomeIcon icon={faMapPin} />
+									{contactData.address}
+								</div>
+
 							</div>
 
-							
-							<Link to= {`/updatecontacts/${contactData.id}`}>
-								<div className="d-flex justify-content-end">
-									<button 
-									type="button" 
-									className="editButton btn btn-secondary"> Edit This Contact
+
+							<div className="editDelButtons">
+								<Link to= {`/updatecontacts/${contactData.id}`}>
+									<div>
+										<button 
+										type="button"
+										className="editButton btn btn-secondary"> Edit This Contact
+										</button>
+									</div>
+								</Link>
+
+								<div>
+									<button
+									type="button"
+									className="deleteButton btn btn-danger" 
+									onClick={()=> deleteContact(contactData.id)}>Delete Contact
 									</button>
 								</div>
-							</Link>
-
-							<div className="d-flex justify-content-end">
-								<button
-								type="button"
-								className="deleteButton btn btn-danger" 
-								onClick={()=> deleteContact(contactData.id)}>Delete Contact
-								</button>
 							</div>
 
 						</div>
